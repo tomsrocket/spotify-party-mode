@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Partyspot.cc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles 
+
+    <link href="bootstrap-style2.css" rel="stylesheet">
+    -->
+
+    <link href="../css/bootstrap.css" rel="stylesheet"> 
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+    
+    <style type="text/css">
+        #logo span{
+            position:absolute;
+            width:1px;height:1px;
+        }
+        #logo span span {
+            position:relative;
+            display:block;
+            top:-2px;
+            left:-300px;
+            height:45px;
+            width:305px;
+/*            background:url(../img/grunge2.png); */
+        }
+
+        @font-face {
+          font-family: 'Frijole';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Frijole'), url(../font/frijole.woff) format('woff');
+        }
+/*        @font-face {
+          font-family: 'Revalia';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Revalia-Regular'), url(font/revalia.woff) format('woff');
+        }
+          @font-face {
+          font-family: 'Pontano Sans';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Pontano Sans'), local('PontanoSans-Regular'), url(font/pontano.woff) format('woff');
+        }   
+*/      @font-face {
+          font-family: 'Syncopate';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Syncopate'), local('Syncopate-Regular'), url(../font/syncopate.woff) format('woff');
+        }
+      
+        .table th, .table td {padding: 1px 4px;line-height:18px; vertical-align:middle}
+        .table td.adds {padding:3px; }
+        .nowplaying, #currentTrack { 
+            font-family:Syncopate; 
+            font-style: normal;
+            font-weight: bold;
+            font-size:13px;
+        }
+        #currentTrack {
+            font-size:12px;color:#eee;
+            line-height:13px;
+            margin-bottom:1px; 
+        }
+        .nowplaying {
+            margin-top:7px;
+            line-height:15px;
+            text-align:right;color:white
+        }
+        .searchrs tbody tr td:nth-child(2) { text-align:right;}
+        #logo img {margin-right:5px;}
+        #logo i {font-size:20px;font-style:normal;}
+        .table-striped tbody tr:hover, .table-striped tbody tr:nth-child(odd):hover
+         {background-color:#393939;color:yellow;}
+        body, input {font-family:Tahoma,Verdana,Arial}
+        input {color:black;font-weight:bold;}
+        div.growlUI { margin-top:50px; }
+        div.growlUI h1, div.growlUI h2 {
+            color: white; padding: 5px 5px 16px 75px; text-align: left
+        }
+        div.growlUI h1 {line-height:30px;background: url(../icon/music-3.png) no-repeat 10px 10px;background-size:48px 48px}
+        div.growlUI h1.red {color:red;background: url(../icon/block.png)  no-repeat 10px 10px; }
+        div.growlUI h1.orange {color:orange;background: url(../icon/alert.png) no-repeat 10px 10px;}
+
+        div.growlUI h2 {font-size:14px;line-height:15px;}
+        div.song span {margin-right:1px;}
+        .song {  
+            font-size: 12.69px;
+            font-weight: bold;
+            color: #ffffff;
+            vertical-align: baseline;
+            white-space: nowrap;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        } 
+        #skipSong {cursor:pointer;}
+        #nowprogress {
+            -webkit-transition: none;
+            -moz-transition: none;
+            -ms-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+        .infoline {
+            margin-bottom:6px;font-weight:bold
+        }
+        #logo,h3 {font-size:38px;font-family: 'Frijole',Arial, serif;
+            letter-spacing:-2px; font-style:normal;font-weight: 400;
+            text-shadow:#833 3px 2px 4px;
+            color: #fff;
+        }
+        h3 {font-size:22px;color:#ddd;}
+        .navbar .brand {
+            padding: 8px 15px 8px!important;
+        }
+        #recentsongs, #songqueue { overflow:hidden }
+        .bigger {font-weight:bold;font-size:25px;}
+    </style>
+
+  
+    <script type="text/javascript" src="../jquery.js"></script>
+    <script type="text/javascript" src="../jquery.cookie.js"></script>
+    <script type="text/javascript" src="../jquery.blockUI.js?1"></script>
+    <script type="text/javascript" src="../partyspot.js"></script>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-3346698-8']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+        
+</head>
+
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+
+
+  <!-- Navbar
+    ================================================== -->
+  <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner" style="background-color:black">
+        <div class="container">
+            <div  style="overflow:hidden" id="logo" class="brand" href="#"><img src="../img/button-green.png" />Partyspot<i>.cc</i><span><span></span></span></div>
+            <div class="nav-collapse" style="margin-top:9px">
+                <div class="span1 nowplaying">
+                Now Playing: 
+                </div>
+
+                <div class="span6" style="min-width:400px;margin-top:4px">
+                    <div id="currentTrack">Nothing</div> 
+                    <div style="width:450px">
+                        <div style="float:right;width:140px" id="currentTime">
+                            <span id="playtime">0:00</span> / <span id="totaltime">0:00</span> 
+                            <div id="skipSong" style="float:right;margin-top:-2px"><span style="padding-top:2px" class="label label-info">skip</span></div>  
+                        </div>
+                        <div class="progress progress-danger progress-striped active" style="width:300px;margin-bottom:10px">
+                            <div id="nowprogress" class="bar" style="width:0px"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+       </div>
+      </div>
+      <div style="width:100%;height:5px;background-color:black;opacity:0.3"></div>
+  </div>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            Service.loadSettings(); 
+
+            //
+            // load playlist from cookie
+            var startup = $.cookie('playlist');
+            if ( document.URL.indexOf("clear") == -1 ) if (  startup ) {
+                songqueue = []; 
+                var arr = startup.split("{"); 
+                arr.map( function( el, index ) {  
+                    var song = el.split("}")
+                    if ( song[1] ) {
+                        setTimeout( function() { Service.queueSong( song, 1 ) ; }, index*100+500 ); 
+                    }
+                }); 
+                
+            } 
+            if ( !songqueue.length  ) {
+                $("#queuecontainer").hide(); 
+            }
+
+            //
+            // remove this
+            Service.processSearchResults(); 
+
+            //
+            // add click events
+            $("#searchsubmit").click( function() {
+                Service.search( $("#searchterm").val() ); 
+            } ); 
+            $("#skipSong").click( function() {
+                Service.playNextSong(); 
+            }).hide();
+
+        });
+
+    </script>
+
+
+
+    <div class="container">
+
+
+<!-- Masthead
+
+<header class="jumbotron subhead" id="overview" style="margin-top:100px">
+  <h1>Superhero</h1>
+  <p class="lead">A preview of changes in this swatch.</p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="http://bootswatch.com/superhero/#typography">Typography</a></li>
+      <li class=""><a href="http://bootswatch.com/superhero/#navbar">Navbar</a></li>
+      <li class=""><a href="http://bootswatch.com/superhero/#buttons">Buttons</a></li>
+      <li class=""><a href="http://bootswatch.com/superhero/#forms">Forms</a></li>
+      <li class=""><a href="http://bootswatch.com/superhero/#miscellaneous">Miscellaneous</a></li>
+    </ul>
+  </div>
+</header>
+================================================== -->
+
+
+
+<section>
+    <div class="page-header">
+        <h1>Party mode & party playlist management for Spotify</h1>
+    </div>
+
+    <div class="row">
+  	  
+    <div class="span4">
+        <h3>Playlist</h3>
+        <div class="well" id="emptyplaylist">
+            <div class="infoline">Your playlist is empty!</div>
+            Search songs using the search form on the right. And add them to the playlist by clicking "add".
+        </div>
+
+        <div class="well" id="queuecontainer">
+            <div id="songqueue">
+            </div>
+        </div>
+
+        <h3>Recently played</h3>
+        <div class="well">
+            <div id="recentsongs">
+                The latest played songs will be displayed here. 
+            </div>
+        </div>
+
+    </div>
+
+    <div class="span8">
+        <h3>Search songs</h3>
+        <form class="well form-search" onsubmit="$('#searchsubmit').click();return false;">
+            <input id="searchterm" type="text" placeholder="Search for artist or song title" class="span5">
+            <input id="searchsubmit" type="button" value="Search" class="btn">
+        </form>
+
+      <div id="searchresults">
+            <table class="searchrs table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>Artist</th>
+                  <th>Song</th>
+                  <th>Album</th>
+                  <th>Length</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Alerts & Messages
+================================================== 
+
+<section>
+
+  <h3 id="alerts">Infos</h3>
+
+  <div class="row">
+	  <div class="span12">
+	      <div class="alert alert-block">
+	        <a class="close">×</a>
+	        <h4 class="alert-heading">What is this?</h4>
+	        <p>This service is using <a href="http://www.spotify.com">Spotify</a> to search for and play songs. You can use partyspot to let people at your party choose their music.</p>
+	      </div>
+	  </div>
+  </div>
+  <div class="row">
+    <div class="span4">
+      <div class="alert alert-error">
+        <a class="close">×</a>
+        <strong>Error</strong> Change a few things up and try submitting again.
+      </div>
+    </div>
+    <div class="span4">
+    </div>
+    <div class="span4">
+      <div class="alert alert-info">
+        <a class="close">×</a>
+        <strong>Information</strong> This alert needs your attention, but it's not super important.
+      </div>
+    </div>
+  </div>
+-->
+
+</section>
+
+<br><br><br><br>
+
+     <!-- Footer
+      ================================================== -->
+      <footer class="footer">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+      </footer>
+
+    </div><!-- /container -->
+
+
+
+    <!-- Le javascript
+    ================================================== 
+
+    <script src="./index_files/bootstrap-dropdown.js"></script>
+    <script src="./index_files/bootstrap-scrollspy.js"></script>
+    <script src="./index_files/bootstrap-collapse.js"></script>
+		<script src="./index_files/bootstrap-tooltip.js"></script>
+    <script src="./index_files/application.js"></script>
+    <script src="./index_files/bootswatch.js"></script>
+
+-->
+
+  
+
+</body></html>
